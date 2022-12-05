@@ -1,5 +1,17 @@
+import { existsSync, cp } from 'fs';
+import { resolve } from 'path';
+
 const copy = async () => {
-    // Write your code here 
+    const filesDirPath = resolve('files')
+    const filesCopyDirPath = resolve('files_copy')
+
+    if (existsSync(filesDirPath) && !existsSync(filesCopyDirPath)) {
+        cp(filesDirPath, filesCopyDirPath, {recursive: true}, (err) => {
+            if (err) throw new Error('FS operation failed')
+        })
+    } else {
+        throw new Error('FS operation failed')
+    }
 };
 
-await copy();
+copy();
